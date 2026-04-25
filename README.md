@@ -5,6 +5,8 @@
 複数プログラミング言語のテスト生成に特化したカスタム LLM プロジェクト。
 [Sakana AI](https://sakana.ai/) の効率的モデル開発思想にインスパイアされ、フロンティア基盤モデルの事前学習に対抗するのではなく、既存OSSモデルを **abliteration / mergekit / multi-LoRA hot-swap** で派生させて作る。
 
+**設計の中核は「特定 base モデルへの依存をなくす」こと**。LLM の世代交代速度（数ヶ月単位）に追従するため、宣言的 manifest と recipe で base を差替可能にする。**永続資産は派生モデル本体ではなく Model Build Pipeline / Eval Pipeline / Self-Improvement Loop / API Surface の4つ**で、新世代 base がリリースされれば 1 コマンドで全派生を再生成して切り替える。
+
 個人スケールのコンシューマGPU で完結し、運用ログから自己改善するループを構築する。
 
 ## ステータス
