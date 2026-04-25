@@ -1,0 +1,38 @@
+# CODEOWNERS — oniwaban
+#
+# 各パスの変更には対応するオーナーのレビューが必須です。
+# フォーマット: <pattern> <owner> [<owner> ...]
+# 詳細: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# デフォルト: 全ファイルはリポジトリオーナーが管轄
+*                               @kkm-horikawa
+
+# ガバナンスファイル
+/README.md                      @kkm-horikawa
+/LICENSE                        @kkm-horikawa
+/CONTRIBUTING.md                @kkm-horikawa
+/SECURITY.md                    @kkm-horikawa
+/CODE_OF_CONDUCT.md             @kkm-horikawa
+
+# プロジェクト設定（依存関係・タスクランナー・lint 設定）
+/pyproject.toml                 @kkm-horikawa
+/justfile                       @kkm-horikawa
+/.gitignore                     @kkm-horikawa
+
+# GitHub 設定・CI ワークフロー
+/.github/                       @kkm-horikawa
+
+# 設計ドキュメント（設計責任者）
+/docs/architecture/             @kkm-horikawa
+
+# パッケージコア
+/src/                           @kkm-horikawa
+
+# テスト
+/tests/                         @kkm-horikawa
+
+# Eval pipeline（評価ロジック改変は影響範囲が大きいため厳重）
+/eval/                          @kkm-horikawa
+
+# 訓練・推論スクリプト
+/scripts/                       @kkm-horikawa
