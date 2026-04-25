@@ -1,13 +1,29 @@
 # Oniwaban
 
-> 個人専用 polyglot コードアシスタント
+> ロール特化 LLM 育成キット
 
-複数プログラミング言語のテスト生成に特化したカスタム LLM プロジェクト。
-[Sakana AI](https://sakana.ai/) の効率的モデル開発思想にインスパイアされ、フロンティア基盤モデルの事前学習に対抗するのではなく、既存OSSモデルを **abliteration / mergekit / multi-LoRA hot-swap** で派生させて作る。
+multi-agent システムで使う **「ロール特化モデル」を個人スケールで育成するためのキット**。
+[Sakana AI](https://sakana.ai/) の効率的モデル開発思想にインスパイアされ、フロンティア基盤モデルの事前学習に対抗するのではなく、既存OSSモデルを **abliteration / mergekit / multi-LoRA hot-swap** で派生させて、特定ロール（フォーマッター・テスター・セキュリティレビュアー等）に特化させる手法をパイプライン化する。
 
-**設計の中核は「特定 base モデルへの依存をなくす」こと**。LLM の世代交代速度（数ヶ月単位）に追従するため、宣言的 manifest と recipe で base を差替可能にする。**永続資産は派生モデル本体ではなく Model Build Pipeline / Eval Pipeline / Self-Improvement Loop / API Surface の4つ**で、新世代 base がリリースされれば 1 コマンドで全派生を再生成して切り替える。
+## キットの3層構造
 
-個人スケールのコンシューマGPU で完結し、運用ログから自己改善するループを構築する。
+1. **Role 抽象**: 「フォーマッター」「テスター」のような **ロールを first-class** で扱う。各ロールは責務 / 入出力 / 評価基準 / 訓練データ仕様を YAML で宣言
+2. **Base Agility**: 特定 base モデルに密結合せず、宣言的 manifest と recipe で base を差替可能。LLM の世代交代に追従する
+3. **Pipeline as Code**: abliteration → merge → role-specific LoRA → eval → deploy を justfile + 宣言的 recipe で記述。1コマンドで全派生を再生成
+
+**永続資産は派生モデル本体ではなく Pipeline / Role 定義 / Eval / Loop / API Surface**。新世代 base がリリースされれば 1 コマンドで全派生を再生成して切り替える。
+
+## 「ロール」の時代変化への対応
+
+「どのロールが個人スケールのローカル LLM で実現可能か」は、ベースモデルの能力向上と共に拡張していく：
+
+| 時期 | 射程内のロール |
+|---|---|
+| **現在** | フォーマッター、テスター、セキュリティレビュアー（パターン認識・構造化タスク中心） |
+| **近未来（〜2年）** | コーダー（実装ロール）、ドキュメンタリスト |
+| **遠い将来（楽観）** | 設計責任者、テクニカルリーダー |
+
+oniwaban のスコープは **「現時点でローカル実現可能なロール」を発見し、それらを再現可能に育成する** こと。ロール定義そのものが時代と共に進化する前提で設計する。
 
 ## ステータス
 
@@ -22,14 +38,20 @@
 | 4 | Week 27-32 | Tool use 学習 |
 | 5 | Week 33-40 | v1.0 仕上げ |
 
-## カバー対象
+## 同梱する Reference Roles（初期実装スコープ）
 
-**プログラミング言語/フレームワーク**: Python, Django, Wagtail, TypeScript, React, Rust, Go, Flutter (Dart)
+キットの動作確認用に以下の reference role 定義を同梱予定。利用者は同形式で独自ロールを追加できる。
 
-**役割**:
-- テスト生成（多言語）
-- セキュリティレビュー（脆弱性監査）
-- コードフォーマット・差分要約
+| Role | 責務 | 評価軸 |
+|---|---|---|
+| `tester` | コードに対する単体・結合テスト生成 | コンパイル成功率 / テスト実行成功率 / mutation kill rate |
+| `formatter` | 差分要約・コード整形・コミットメッセージ生成 | フォーマット規則順守率 / 意味保存率 |
+| `security-reviewer` | コード脆弱性監査・改善提案 | 既知 CVE パターン検出率 / 偽陽性率 |
+| `coder`（実験段階） | 実装タスクの遂行 | 仕様充足率 / テスト通過率 |
+
+**カバー対象言語/フレームワーク**: Python, Django, Wagtail, TypeScript, React, Rust, Go, Flutter (Dart)
+
+各 role × 言語の組み合わせを LoRA として育成する（独立 LoRA + hot-swap）。
 
 ## 技術スタック
 
