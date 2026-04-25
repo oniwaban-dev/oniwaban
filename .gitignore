@@ -216,3 +216,48 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# === ML / oniwaban-specific ===
+
+# Model artifacts (large binaries)
+models/
+checkpoints/
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.onnx
+
+# Training runs / logs
+runs/
+wandb/
+mlflow/
+tensorboard/
+
+# Datasets / training data (often large or sensitive)
+data/
+datasets/
+!data/.gitkeep
+
+# Eval results (large output dumps)
+eval_results/
+benchmark_outputs/
+
+# HuggingFace cache (mirror to prevent accidental commit)
+.cache/
+.hf_cache/
+huggingface/
+
+# Secrets
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+.tailscale_authkey
+
+# OS / Editors
+.DS_Store
+.idea/
