@@ -78,6 +78,14 @@ oniwaban は **OpenAI 互換 HTTP API** を contract として持つため、特
 
 詳細な統合手順は [integration-patterns.md](docs/architecture/integration-patterns.md) を参照。
 
+## 学習用 Wiki
+
+AI 開発の前提知識から oniwaban の設計思想まで、**高校生でも読める語り口** で解説した学習用 Wiki を別途用意：
+
+📚 **[Wiki トップ →](https://github.com/oniwaban-dev/oniwaban/wiki)**
+
+カテゴリ：基礎（Transformer / 量子化 / MoE）、学習手法（LoRA / 蒸留 / マージ / abliteration）、ツール（ollama / vLLM / axolotl / mergekit）、設計思想、運用インフラ、会話メモ — 全 35 記事。
+
 ## 設計ドキュメント
 
 | ドキュメント | 内容 |
